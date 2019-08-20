@@ -1,0 +1,22 @@
+package katas.client.twitter.infra.repositories.endpoints
+
+import io.reactivex.Single
+import katas.client.twitter.domain.entities.User
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+data class RestUser(val realName: String, val nickname: String) {
+    companion object {
+        fun from(user: User): RestUser {
+            return RestUser(user.realName, user.nickname)
+        }
+    }
+}
+
+interface UserEndpoint {
+
+    @POST("users/")
+    fun registerUser(@Body user: RestUser) : Single<RestUser>
+
+}
