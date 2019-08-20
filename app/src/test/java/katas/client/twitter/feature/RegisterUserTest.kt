@@ -21,7 +21,7 @@ class RegisterUserTest {
 
         // when
         val registerUser = RegisterUser(userRepository)
-        registerUser.execute(user)
+        registerUser.execute(user.realName, user.nickname)
 
         // then
         verify(userRepository, times(1)).save(eq(user))
