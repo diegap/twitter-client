@@ -12,6 +12,5 @@ class TwitterApp : Application() {
         if (BuildConfig.DEBUG){
             plant(DebugTree())
         }
-
     }
 }

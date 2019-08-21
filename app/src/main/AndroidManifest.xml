@@ -13,7 +13,8 @@
             android:theme="@style/AppTheme"
             android:name=".ui.TwitterApp"
             android:usesCleartextTraffic="true">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.MainActivity"
+                android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

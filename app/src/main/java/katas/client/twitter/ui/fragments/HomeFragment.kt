@@ -9,21 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.google.android.material.chip.Chip
 import katas.client.twitter.R
-import katas.client.twitter.domain.actions.RegisterUser
+import katas.client.twitter.domain.actions.ShowHome
 import katas.client.twitter.infra.repositories.LocalUserRepository
 import katas.client.twitter.infra.repositories.RestUserRepository
 import katas.client.twitter.infra.repositories.endpoints.UserEndpoint
-import katas.client.twitter.ui.viewmodel.SignupViewModel
-import kotlinx.android.synthetic.main.fragment_signup.*
+import katas.client.twitter.ui.viewmodel.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
-import timber.log.Timber
 
-class SignupViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class HomeViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
 
     private var retrofit: Retrofit? = null
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -31,8 +30,8 @@ class SignupViewModelFactory(private val context: Context) : ViewModelProvider.F
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper())).build()
 
-        return SignupViewModel(
-            RegisterUser(
+        return HomeViewModel(
+            ShowHome(
                 restUserRepository = RestUserRepository(retrofit!!.create(UserEndpoint::class.java)),
                 localUserRepository = LocalUserRepository(context.applicationContext)
             )
@@ -40,42 +39,33 @@ class SignupViewModelFactory(private val context: Context) : ViewModelProvider.F
     }
 }
 
-class SignupFragment : Fragment() {
-
-    private lateinit var signupViewModel: SignupViewModel
+class HomeFragment : Fragment() {
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        signupViewModel =
-            ViewModelProvider(this, SignupViewModelFactory(requireActivity().application)).get(
-                SignupViewModel::class.java
+        homeViewModel =
+            ViewModelProvider(this, HomeViewModelFactory(requireActivity().application)).get(
+                HomeViewModel::class.java
             )
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_signup, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        signupButton.setOnClickListener {
-            signupViewModel.signup(
-                userNameEditText.text.toString(),
-                nicknameEditText.text.toString()
-            )
-        }
-        signupViewModel.navigation.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                "tweets" -> {
-                    findNavController().navigate(R.id.action_signupFragment_to_tweetsFragment)
-                }
-                else -> {
-                    Timber.d("Unknown navigation")
-                }
+        homeViewModel.user.observe(viewLifecycleOwner, Observer { user ->
+            userNameEditText.setText(user.realName)
+            nicknameEditText.setText(user.nickname)
+            user.follows.forEach{
+                val chip = Chip(context)
+                chip.text = it
+                followsChipGroup.addView(chip)
             }
         })
     }

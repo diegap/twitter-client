@@ -1,5 +1,6 @@
 package katas.client.twitter.ui.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -10,7 +11,8 @@ import timber.log.Timber
 
 class SignupViewModel(private val registerUser: RegisterUser) : ViewModel() {
 
-    var disposable: Disposable? = null
+    private var disposable: Disposable? = null
+    val navigation: MutableLiveData<String> = MutableLiveData()
 
     fun signup(userName: String, nickname: String) {
         disposable = registerUser.execute(userName, nickname)
@@ -20,7 +22,7 @@ class SignupViewModel(private val registerUser: RegisterUser) : ViewModel() {
                 Timber.e(it)
             }, {
                 Timber.d("Registraton 0k")
-                // TODO navigation pending
+                navigation.value = "tweets"
             })
     }
 

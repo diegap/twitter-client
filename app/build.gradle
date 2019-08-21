@@ -13,6 +13,8 @@ def rxandroidVersion = "2.1.1"
 def jacksonVersion = "2.6.1"
 def timberVersion = "4.7.1"
 def navVersion = "2.0.0"
+def materialVersion = "1.0.0"
+def jacksonModuleKotlinVersion = "2.9.7"
 
 android {
     compileSdkVersion 29
@@ -52,9 +54,13 @@ dependencies {
 
     implementation "com.squareup.retrofit2:converter-jackson:$jacksonVersion"
     implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonModuleKotlinVersion"
+
 
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
+
+    implementation "com.google.android.material:material:$materialVersion"
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
 
