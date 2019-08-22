@@ -15,15 +15,14 @@ class HomeViewModel(private val showHome: ShowHome, private val followUser: Foll
     ViewModel() {
 
     init {
-        // TODO: Adapt to SessionRepository
-        showHome("")
+        showHome()
     }
 
     private var disposable: Disposable? = null
     val user: MutableLiveData<User> = MutableLiveData()
 
-    private fun showHome(nickname: String) {
-        disposable = showHome.execute(nickname)
+    private fun showHome() {
+        disposable = showHome.execute()
             .subscribeOn(io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy({

@@ -8,8 +8,8 @@ import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 class ShowHome(private val restUserRepository: RemoteUserRepository,
                private val localUserRepository: LocalUserRepository
 ) {
-    fun execute(nickname: String) : Single<User> =
-         localUserRepository.find(nickname).flatMap {
+    fun execute() : Single<User> =
+         localUserRepository.find().flatMap {
             restUserRepository.find(it.nickname)
      }
 }

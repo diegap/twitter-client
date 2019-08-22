@@ -7,11 +7,10 @@ import io.reactivex.Single
 import katas.client.twitter.signup.domain.entities.User
 import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 
-// TODO: Replace LocalUserRepository sith SessionRepository
 class SessionRepository(private val context: Context) :
     LocalUserRepository {
 
-    override fun find(nickname: String): Single<User> {
+    override fun find(): Single<User> {
         val loggedUser = User(
             nickname = getUserPreferences().getString("nickname", "")!!,
             realName = getUserPreferences().getString("realName", "")!!,

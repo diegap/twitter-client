@@ -13,7 +13,7 @@ class FollowUser(
         restUserRepository
             .follow(nickname, follow)
             .andThen(
-                userRepository.find(nickname)
+                userRepository.find()
                     .map { it.addFollow(follow) }
                     .flatMap { userRepository.save(it).toSingle { it } }
             )

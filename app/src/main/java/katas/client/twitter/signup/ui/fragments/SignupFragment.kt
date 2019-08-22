@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import katas.client.twitter.R
-import katas.client.twitter.ui.koinProxy
 import katas.client.twitter.signup.ui.viewmodel.SignupViewModel
+import katas.client.twitter.koinProxy
 import kotlinx.android.synthetic.main.fragment_signup.*
 import timber.log.Timber
 
@@ -58,6 +59,9 @@ class SignupFragment : Fragment() {
                     Timber.d("Unknown navigation")
                 }
             }
+        })
+        signupViewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(view.context, it, Toast.LENGTH_SHORT).show()
         })
     }
 }

@@ -6,5 +6,5 @@ import katas.client.twitter.signup.domain.entities.User
 
 interface LocalUserRepository {
     fun save(user: User) : Completable
-    fun find(nickname: String) : Single<User>
+    fun find() : Single<User>
 }

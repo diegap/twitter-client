@@ -16,5 +16,14 @@
             android:id="@+id/tweetsFragment"
             android:name="katas.client.twitter.profile.ui.fragments.HomeFragment"
             android:label="TweetsFragment"
-            tools:layout="@layout/fragment_home"/>
+            tools:layout="@layout/fragment_home">
+        <action
+                android:id="@+id/action_tweetsFragment_to_tweetDialogFragment"
+                app:destination="@id/tweetDialogFragment" />
+    </fragment>
+    <dialog
+            android:id="@+id/tweetDialogFragment"
+            android:name="katas.client.twitter.tweet.ui.fragments.TweetDialogFragment"
+            android:label="TweetDialogFragment"
+            tools:layout="@layout/dialog_fragment_tweet"/>
 </navigation>
