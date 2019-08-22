@@ -1,11 +1,10 @@
 package katas.client.twitter.ui
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import katas.client.twitter.BuildConfig
 import katas.client.twitter.domain.actions.FollowUser
-import katas.client.twitter.domain.actions.RegisterUser
+import katas.client.twitter.signup.domain.actions.RegisterUser
 import katas.client.twitter.domain.actions.ShowHome
 import katas.client.twitter.domain.repositories.RemoteUserRepository
 import katas.client.twitter.domain.repositories.UserRepository

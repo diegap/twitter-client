@@ -6,12 +6,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import katas.client.twitter.domain.actions.RegisterUser
+import katas.client.twitter.signup.domain.actions.RegisterUser
 import timber.log.Timber
 
 class SignupViewModel(private val registerUser: RegisterUser) : ViewModel() {
 
     private var disposable: Disposable? = null
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
     val navigation: MutableLiveData<String> = MutableLiveData()
 
     fun signup(userName: String, nickname: String) {
@@ -20,6 +21,7 @@ class SignupViewModel(private val registerUser: RegisterUser) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy({
                 Timber.e(it)
+                errorMessage.value = "Error registering user $nickname"
             }, {
                 Timber.d("Registered >> $userName@$nickname 0k")
                 navigation.value = "tweets"

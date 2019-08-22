@@ -1,4 +1,4 @@
-package katas.client.twitter.domain.actions
+package katas.client.twitter.signup.domain.actions
 
 import io.reactivex.Completable
 import katas.client.twitter.domain.entities.User

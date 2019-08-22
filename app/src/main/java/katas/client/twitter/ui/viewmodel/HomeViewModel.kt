@@ -20,7 +20,6 @@ class HomeViewModel(private val showHome: ShowHome, private val followUser: Foll
     }
 
     private var disposable: Disposable? = null
-    private val navigation: MutableLiveData<String> = MutableLiveData()
     val user: MutableLiveData<User> = MutableLiveData()
 
     private fun showHome(nickname: String) {

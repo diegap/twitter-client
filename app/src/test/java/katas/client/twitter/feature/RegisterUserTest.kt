@@ -2,7 +2,7 @@ package katas.client.twitter.feature
 
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
-import katas.client.twitter.domain.actions.RegisterUser
+import katas.client.twitter.signup.domain.actions.RegisterUser
 import katas.client.twitter.domain.entities.User
 import katas.client.twitter.domain.repositories.RemoteUserRepository
 import katas.client.twitter.domain.repositories.UserRepository
@@ -25,7 +25,10 @@ class RegisterUserTest {
         }
 
         // when
-        val registerUser = RegisterUser(remoteUserRepository, userRepository)
+        val registerUser = RegisterUser(
+            remoteUserRepository,
+            userRepository
+        )
         registerUser.execute(user.realName, user.nickname)
 
         // then
