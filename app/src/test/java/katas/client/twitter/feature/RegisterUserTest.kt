@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
 import katas.client.twitter.domain.actions.RegisterUser
 import katas.client.twitter.domain.entities.User
+import katas.client.twitter.domain.repositories.RemoteUserRepository
 import katas.client.twitter.domain.repositories.UserRepository
 import org.junit.Test
 
@@ -13,17 +14,22 @@ class RegisterUserTest {
     fun `Registering a new user`() {
 
         // given
-        val user = User("Jack Bauer", "@jack")
+        val user = User("Jack Bauer", "@jack", emptySet())
 
         val userRepository = mock<UserRepository> {
             on { save(user) } doReturn Completable.complete()
         }
 
+        val remoteUserRepository = mock<RemoteUserRepository> {
+            on { save(user) } doReturn Completable.complete()
+        }
+
         // when
-        val registerUser = RegisterUser(userRepository)
+        val registerUser = RegisterUser(remoteUserRepository, userRepository)
         registerUser.execute(user.realName, user.nickname)
 
         // then
+        verify(remoteUserRepository, times(1)).save(eq(user))
         verify(userRepository, times(1)).save(eq(user))
 
     }
