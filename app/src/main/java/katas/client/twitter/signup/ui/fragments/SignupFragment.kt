@@ -1,4 +1,4 @@
-package katas.client.twitter.ui.fragments
+package katas.client.twitter.signup.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import katas.client.twitter.R
 import katas.client.twitter.ui.koinProxy
-import katas.client.twitter.ui.viewmodel.SignupViewModel
+import katas.client.twitter.signup.ui.viewmodel.SignupViewModel
 import kotlinx.android.synthetic.main.fragment_signup.*
 import timber.log.Timber
 
@@ -26,7 +26,9 @@ class SignupFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signupViewModel =
-            ViewModelProvider(this, SignupViewModelFactory).get(
+            ViewModelProvider(this,
+                SignupViewModelFactory
+            ).get(
                 SignupViewModel::class.java
             )
     }

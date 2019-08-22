@@ -3,16 +3,15 @@ package katas.client.twitter.ui
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import katas.client.twitter.BuildConfig
-import katas.client.twitter.domain.actions.FollowUser
+import katas.client.twitter.profile.domain.actions.FollowUser
+import katas.client.twitter.profile.domain.actions.ShowHome
+import katas.client.twitter.signup.infra.repositories.RestUserRepository
+import katas.client.twitter.signup.infra.repositories.SessionRepository
+import katas.client.twitter.signup.infra.repositories.UserEndpoint
 import katas.client.twitter.signup.domain.actions.RegisterUser
-import katas.client.twitter.domain.actions.ShowHome
-import katas.client.twitter.domain.repositories.RemoteUserRepository
-import katas.client.twitter.domain.repositories.UserRepository
-import katas.client.twitter.infra.repositories.LocalUserRepository
-import katas.client.twitter.infra.repositories.RestUserRepository
-import katas.client.twitter.infra.repositories.endpoints.UserEndpoint
-import katas.client.twitter.ui.viewmodel.HomeViewModel
-import katas.client.twitter.ui.viewmodel.SignupViewModel
+import katas.client.twitter.signup.domain.repositories.RemoteUserRepository
+import katas.client.twitter.profile.ui.viewmodel.HomeViewModel
+import katas.client.twitter.signup.ui.viewmodel.SignupViewModel
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -45,11 +44,15 @@ class TwitterApp : Application() {
                             .build()
 
                     single {
-                        LocalUserRepository(this@TwitterApp) as UserRepository
+                        SessionRepository(this@TwitterApp) as katas.client.twitter.signup.domain.repositories.LocalUserRepository
                     }
 
                     single {
-                        RestUserRepository(retrofit.create(UserEndpoint::class.java)) as RemoteUserRepository
+                        RestUserRepository(
+                            retrofit.create(
+                                UserEndpoint::class.java
+                            )
+                        ) as RemoteUserRepository
                     }
 
                     single {

@@ -1,14 +1,15 @@
-package katas.client.twitter.infra.repositories
+package katas.client.twitter.signup.infra.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
 import io.reactivex.Completable
 import io.reactivex.Single
-import katas.client.twitter.domain.entities.User
-import katas.client.twitter.domain.repositories.UserRepository
+import katas.client.twitter.signup.domain.entities.User
+import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 
-// TODO: Replace UserRepository sith SessionRepository
-class LocalUserRepository(private val context: Context) : UserRepository {
+// TODO: Replace LocalUserRepository sith SessionRepository
+class SessionRepository(private val context: Context) :
+    LocalUserRepository {
 
     override fun find(nickname: String): Single<User> {
         val loggedUser = User(

@@ -1,4 +1,4 @@
-package katas.client.twitter.ui.viewmodel
+package katas.client.twitter.signup.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

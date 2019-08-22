@@ -1,13 +1,13 @@
-package katas.client.twitter.domain.actions
+package katas.client.twitter.profile.domain.actions
 
 import io.reactivex.Single
-import katas.client.twitter.domain.entities.User
-import katas.client.twitter.domain.repositories.RemoteUserRepository
-import katas.client.twitter.domain.repositories.UserRepository
+import katas.client.twitter.signup.domain.entities.User
+import katas.client.twitter.signup.domain.repositories.RemoteUserRepository
+import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 
 class FollowUser(
     private val restUserRepository: RemoteUserRepository,
-    private val userRepository: UserRepository
+    private val userRepository: LocalUserRepository
 ) {
     fun execute(nickname: String, follow: String): Single<User> =
         restUserRepository

@@ -6,9 +6,10 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Completable
 import katas.client.twitter.RxSchedulersRules
-import katas.client.twitter.domain.repositories.RemoteUserRepository
-import katas.client.twitter.domain.repositories.UserRepository
+import katas.client.twitter.signup.domain.repositories.RemoteUserRepository
+import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 import katas.client.twitter.signup.domain.actions.RegisterUser
+import katas.client.twitter.signup.ui.viewmodel.SignupViewModel
 import org.amshove.kluent.*
 import org.junit.Rule
 import org.junit.Test
@@ -28,7 +29,7 @@ class SignupViewModelTest {
         val remoteUserRepository = mock<RemoteUserRepository>{
             on { save(any()) } doReturn Completable.complete()
         }
-        val localUserRepository = mock<UserRepository>{
+        val localUserRepository = mock<LocalUserRepository>{
             on { save(any()) } doReturn Completable.complete()
         }
 
@@ -49,7 +50,7 @@ class SignupViewModelTest {
         val remoteUserRepository = mock<RemoteUserRepository>{
             on { save(any()) } doReturn Completable.error(RuntimeException("User already registered!"))
         }
-        val localUserRepository = mock<UserRepository>{
+        val localUserRepository = mock<LocalUserRepository>{
             on { save(any()) } doReturn Completable.complete()
         }
 

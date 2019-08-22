@@ -5,7 +5,7 @@
         app:startDestination="@id/signupFragment">
     <fragment
             android:id="@+id/signupFragment"
-            android:name="katas.client.twitter.ui.fragments.SignupFragment"
+            android:name="katas.client.twitter.signup.ui.fragments.SignupFragment"
             android:label="SignupFragment"
             tools:layout="@layout/fragment_signup">
         <action
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
             android:id="@+id/tweetsFragment"
-            android:name="katas.client.twitter.ui.fragments.HomeFragment"
+            android:name="katas.client.twitter.profile.ui.fragments.HomeFragment"
             android:label="TweetsFragment"
             tools:layout="@layout/fragment_home"/>
 </navigation>

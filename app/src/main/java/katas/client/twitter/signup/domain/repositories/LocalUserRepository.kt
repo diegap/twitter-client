@@ -1,10 +1,10 @@
-package katas.client.twitter.domain.repositories
+package katas.client.twitter.signup.domain.repositories
 
 import io.reactivex.Completable
 import io.reactivex.Single
-import katas.client.twitter.domain.entities.User
+import katas.client.twitter.signup.domain.entities.User
 
-interface UserRepository {
+interface LocalUserRepository {
     fun save(user: User) : Completable
     fun find(nickname: String) : Single<User>
 }

@@ -1,4 +1,4 @@
-package katas.client.twitter.ui.fragments
+package katas.client.twitter.profile.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import katas.client.twitter.R
 import katas.client.twitter.ui.koinProxy
-import katas.client.twitter.ui.viewmodel.HomeViewModel
+import katas.client.twitter.profile.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 object HomeViewModelFactory : ViewModelProvider.Factory {
