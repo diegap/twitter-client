@@ -2,9 +2,10 @@ package katas.client.twitter.domain.actions
 
 import io.reactivex.Single
 import katas.client.twitter.domain.entities.User
+import katas.client.twitter.domain.repositories.RemoteUserRepository
 import katas.client.twitter.domain.repositories.UserRepository
 
-class ShowHome(private val restUserRepository: UserRepository,
+class ShowHome(private val restUserRepository: RemoteUserRepository,
                private val localUserRepository: UserRepository
 ) {
     fun execute(nickname: String) : Single<User> =

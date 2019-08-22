@@ -21,7 +21,7 @@ class SignupViewModel(private val registerUser: RegisterUser) : ViewModel() {
             .subscribeBy({
                 Timber.e(it)
             }, {
-                Timber.d("Registraton 0k")
+                Timber.d("Registered >> $userName$nickname 0k")
                 navigation.value = "tweets"
             })
     }

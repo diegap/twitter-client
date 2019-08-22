@@ -19,7 +19,6 @@ class LocalUserRepository(private val context: Context) : UserRepository {
         return Single.just(loggedUser)
     }
 
-
     override fun save(user: User): Completable {
         return Completable.fromRunnable {
             getUserPreferences().edit()
