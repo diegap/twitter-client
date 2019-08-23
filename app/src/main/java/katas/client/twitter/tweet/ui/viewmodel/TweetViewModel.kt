@@ -12,8 +12,8 @@ import timber.log.Timber
 class TweetViewModel(private val sendTweet: SendTweet) : ViewModel() {
 
     private var disposable: Disposable? = null
-    private val errorMessage: MutableLiveData<String> = MutableLiveData()
-    private val navigation: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val navigation: MutableLiveData<String> = MutableLiveData()
 
     fun sendTweet(tweetContent: String) {
         disposable = sendTweet.execute(tweetContent)

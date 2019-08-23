@@ -1,9 +1,8 @@
 package katas.client.twitter.ui.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.nhaarman.mockitokotlin2.*
 import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.Completable
 import katas.client.twitter.RxSchedulersRules
 import katas.client.twitter.signup.domain.repositories.RemoteUserRepository
@@ -42,6 +41,9 @@ class SignupViewModelTest {
         // then
         viewModel.navigation.value shouldEqual "tweets"
         viewModel.errorMessage.value shouldEqual null
+
+        verify(remoteUserRepository, atMost(1)).save(any())
+        verify(localUserRepository, atMost(1)).find()
     }
 
     @Test
@@ -63,5 +65,8 @@ class SignupViewModelTest {
         // then
         viewModel.navigation.value shouldEqual null
         viewModel.errorMessage.value?.`should start with`("Error registering user")
+
+        verify(remoteUserRepository, atMost(1)).save(any())
+        verify(localUserRepository, atMost(1)).find()
     }
 }

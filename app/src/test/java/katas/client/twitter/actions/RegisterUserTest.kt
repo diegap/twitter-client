@@ -1,4 +1,4 @@
-package katas.client.twitter.feature
+package katas.client.twitter.actions
 
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
@@ -61,8 +61,8 @@ class RegisterUserTest {
         registerUser.execute(user.realName, user.nickname)
 
         // then
-        verify(remoteUserRepository, times(1)).save(eq(user))
-        verify(userRepository, times(0)).save(eq(user))
+        verify(remoteUserRepository, only()).save(eq(user))
+        verifyZeroInteractions(userRepository)
 
     }
 
