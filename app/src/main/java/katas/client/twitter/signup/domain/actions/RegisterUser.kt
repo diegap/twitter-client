@@ -12,6 +12,9 @@ class RegisterUser(
 
     fun execute(userName: String, nickname: String): Completable {
         val user = User(userName, nickname, emptySet())
-        return remoteUserRepository.save(user).andThen(localUserRepository.save(user))
+        return remoteUserRepository
+            .save(user)
+            .doOnComplete { localUserRepository.save(user) }
+            .doOnError { throw RuntimeException("Cannot register user $nickname") }
     }
 }
