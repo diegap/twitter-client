@@ -27,9 +27,4 @@ internal class RestUserRepository(private val userEndpoint: UserEndpoint) :
             UserFollow(follow)
         ).ignoreElement()
     }
-
-    override fun tweet(nickname: String, tweet: String) : Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
 }

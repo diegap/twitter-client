@@ -24,11 +24,14 @@ data class UserFollow(val nickname: String)
 
 internal interface UserEndpoint {
     @POST("users/")
-    fun registerUser(@Body user: RestUser) : Single<ResponseBody>
+    fun registerUser(@Body user: RestUser): Single<ResponseBody>
 
     @GET("users/{nickname}")
-    fun getUser(@Path("nickname") nickname: String) : Single<RestUser>
+    fun getUser(@Path("nickname") nickname: String): Single<RestUser>
 
     @POST("users/{nickname}/follows")
-    fun followUser(@Path("nickname") nickname: String, @Body follow: UserFollow) : Single<ResponseBody>
+    fun followUser(
+        @Path("nickname") nickname: String,
+        @Body follow: UserFollow
+    ): Single<ResponseBody>
 }

@@ -7,7 +7,7 @@ import io.reactivex.Single
 import katas.client.twitter.signup.domain.entities.User
 import katas.client.twitter.signup.domain.repositories.LocalUserRepository
 
-class SessionRepository(private val context: Context) :
+class SessionUserRepository(private val context: Context) :
     LocalUserRepository {
 
     override fun find(): Single<User> {
