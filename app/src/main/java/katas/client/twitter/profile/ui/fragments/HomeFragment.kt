@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import katas.client.twitter.R
 import katas.client.twitter.koinProxy
 import katas.client.twitter.profile.ui.viewmodel.HomeViewModel
+import katas.client.twitter.tweet.ui.adapter.TweetAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
 object HomeViewModelFactory : ViewModelProvider.Factory {
@@ -21,6 +23,8 @@ object HomeViewModelFactory : ViewModelProvider.Factory {
 }
 
 class HomeFragment : Fragment() {
+
+    private val tweetAdapter = TweetAdapter()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +53,10 @@ class HomeFragment : Fragment() {
         }
 
         updateButton.setOnClickListener {
-            homeViewModel.updateUser(nicknameEditText.text.toString(), userNameEditText.text.toString())
+            homeViewModel.updateUser(
+                nicknameEditText.text.toString(),
+                userNameEditText.text.toString()
+            )
         }
 
         newTweetButton.setOnClickListener {
@@ -65,5 +72,12 @@ class HomeFragment : Fragment() {
                 followsChipGroup.addView(chip)
             }
         })
+
+        homeViewModel.tweets.observe(viewLifecycleOwner, Observer { tweets ->
+            tweetAdapter.updateTweets(tweets)
+        })
+
+        recyclerViewTweets.layoutManager = LinearLayoutManager(this.context)
+        recyclerViewTweets.adapter = tweetAdapter
     }
 }

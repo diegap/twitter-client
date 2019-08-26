@@ -3,6 +3,7 @@ package katas.client.twitter
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import katas.client.twitter.profile.domain.actions.FollowUser
+import katas.client.twitter.profile.domain.actions.GetTweets
 import katas.client.twitter.profile.domain.actions.ShowHome
 import katas.client.twitter.profile.ui.viewmodel.HomeViewModel
 import katas.client.twitter.signup.domain.actions.RegisterUser
@@ -85,6 +86,10 @@ class TwitterApp : Application() {
                     }
 
                     single {
+                        GetTweets(get(), get())
+                    }
+
+                    single {
                         UpdateUser(get(), get())
                     }
 
@@ -93,7 +98,7 @@ class TwitterApp : Application() {
                     }
 
                     factory {
-                        HomeViewModel(get(), get(), get())
+                        HomeViewModel(get(), get(), get(), get())
                     }
 
                     factory {

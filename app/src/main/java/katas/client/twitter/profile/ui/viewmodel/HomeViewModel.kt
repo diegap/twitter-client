@@ -8,25 +8,31 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.io
 import katas.client.twitter.profile.domain.actions.FollowUser
+import katas.client.twitter.profile.domain.actions.GetTweets
 import katas.client.twitter.profile.domain.actions.ShowHome
 import katas.client.twitter.signup.domain.entities.User
 import katas.client.twitter.tweet.domain.actions.UpdateUser
+import katas.client.twitter.tweet.domain.entities.Tweet
 import timber.log.Timber
 
 class HomeViewModel(
     private val showHome: ShowHome,
     private val followUser: FollowUser,
-    private val updateUser: UpdateUser
+    private val updateUser: UpdateUser,
+    private val getTweets: GetTweets
 ) :
     ViewModel() {
 
     init {
         showHome()
+        getTweets()
     }
 
     private var disposable: Disposable? = null
-    val errorMessage: MutableLiveData<String> = MutableLiveData()
+
+    private val errorMessage: MutableLiveData<String> = MutableLiveData()
     val user: MutableLiveData<User> = MutableLiveData()
+    val tweets: MutableLiveData<List<Tweet>> = MutableLiveData()
 
     private fun showHome() {
         disposable = showHome.execute()
@@ -60,6 +66,18 @@ class HomeViewModel(
                 errorMessage.value = "Error updating user $nickname"
             }, {
                 Timber.d("Updated user >> $nickname with realname $userName")
+            })
+    }
+
+    private fun getTweets() {
+        disposable = getTweets.execute()
+            .subscribeOn(io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy({
+                Timber.e(it)
+            }, {
+                Timber.d("Retrieved ${it.size} tweets")
+                tweets.value = it
             })
     }
 

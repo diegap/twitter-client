@@ -1,6 +1,5 @@
 package katas.client.twitter.tweet.domain.repositories
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import katas.client.twitter.tweet.domain.entities.Tweet
 import okhttp3.ResponseBody
@@ -14,7 +13,7 @@ internal interface TweetEndpoint {
     fun save(@Body tweet: RestTweet): Single<ResponseBody>
 
     @GET("tweets/{nickname}")
-    fun find(@Path("nickname") nickname: String): Observable<RestTweet>
+    fun find(@Path("nickname") nickname: String): Single<List<RestTweet>>
 }
 
 internal data class RestTweet(val nickname: String, val content: String) {
