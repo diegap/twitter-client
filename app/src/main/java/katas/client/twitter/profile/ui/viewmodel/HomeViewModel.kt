@@ -5,13 +5,19 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.io
 import katas.client.twitter.profile.domain.actions.FollowUser
 import katas.client.twitter.profile.domain.actions.ShowHome
 import katas.client.twitter.signup.domain.entities.User
+import katas.client.twitter.tweet.domain.actions.UpdateUser
 import timber.log.Timber
 
-class HomeViewModel(private val showHome: ShowHome, private val followUser: FollowUser) :
+class HomeViewModel(
+    private val showHome: ShowHome,
+    private val followUser: FollowUser,
+    private val updateUser: UpdateUser
+) :
     ViewModel() {
 
     init {
@@ -19,6 +25,7 @@ class HomeViewModel(private val showHome: ShowHome, private val followUser: Foll
     }
 
     private var disposable: Disposable? = null
+    val errorMessage: MutableLiveData<String> = MutableLiveData()
     val user: MutableLiveData<User> = MutableLiveData()
 
     private fun showHome() {
@@ -41,6 +48,18 @@ class HomeViewModel(private val showHome: ShowHome, private val followUser: Foll
             }, {
                 Timber.d("Following >> $follow!")
                 user.value = it
+            })
+    }
+
+    fun updateUser(nickname: String, userName: String) {
+        disposable = updateUser.execute(nickname, userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy({
+                Timber.e(it)
+                errorMessage.value = "Error updating user $nickname"
+            }, {
+                Timber.d("Updated user >> $nickname with realname $userName")
             })
     }
 

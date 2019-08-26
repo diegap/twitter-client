@@ -9,7 +9,8 @@ import io.reactivex.schedulers.Schedulers
 import katas.client.twitter.tweet.domain.actions.SendTweet
 import timber.log.Timber
 
-class TweetViewModel(private val sendTweet: SendTweet) : ViewModel() {
+class TweetViewModel(private val sendTweet: SendTweet) :
+    ViewModel() {
 
     private var disposable: Disposable? = null
     val errorMessage: MutableLiveData<String> = MutableLiveData()
@@ -32,5 +33,6 @@ class TweetViewModel(private val sendTweet: SendTweet) : ViewModel() {
         super.onCleared()
         disposable?.dispose()
     }
+
 
 }

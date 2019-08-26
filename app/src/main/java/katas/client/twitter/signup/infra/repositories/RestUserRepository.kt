@@ -7,7 +7,6 @@ import katas.client.twitter.signup.domain.repositories.RemoteUserRepository
 
 internal class RestUserRepository(private val userEndpoint: UserEndpoint) :
     RemoteUserRepository {
-
     override fun find(nickname: String): Single<User> {
         return userEndpoint.getUser(nickname).map {
             User(
@@ -22,9 +21,14 @@ internal class RestUserRepository(private val userEndpoint: UserEndpoint) :
         return userEndpoint.registerUser(RestUser.from(user)).ignoreElement()
     }
 
-    override fun follow(nickname: String, follow: String) : Completable {
-        return userEndpoint.followUser(nickname,
+    override fun follow(nickname: String, follow: String): Completable {
+        return userEndpoint.followUser(
+            nickname,
             UserFollow(follow)
         ).ignoreElement()
+    }
+
+    override fun update(user: User): Completable {
+        return userEndpoint.updateUser(user.nickname, RestUser.from(user)).ignoreElement()
     }
 }

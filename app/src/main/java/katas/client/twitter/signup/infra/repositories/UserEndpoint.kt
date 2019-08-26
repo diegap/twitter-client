@@ -3,10 +3,7 @@ package katas.client.twitter.signup.infra.repositories
 import io.reactivex.Single
 import katas.client.twitter.signup.domain.entities.User
 import okhttp3.ResponseBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 data class RestUser(val realName: String, val nickname: String, val follows: List<String>) {
     companion object {
@@ -34,4 +31,8 @@ internal interface UserEndpoint {
         @Path("nickname") nickname: String,
         @Body follow: UserFollow
     ): Single<ResponseBody>
+
+    @PUT("users/{nickname}")
+    fun updateUser(@Path("nickname") nickname: String,
+                   @Body user: RestUser) : Single<ResponseBody>
 }

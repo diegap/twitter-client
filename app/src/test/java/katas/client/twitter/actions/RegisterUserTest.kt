@@ -30,7 +30,7 @@ class RegisterUserTest {
             remoteUserRepository,
             userRepository
         )
-        registerUser.execute(user.realName, user.nickname)
+        registerUser.execute(user.realName, user.nickname).blockingGet()
 
         // then
         verify(remoteUserRepository, times(1)).save(eq(user))

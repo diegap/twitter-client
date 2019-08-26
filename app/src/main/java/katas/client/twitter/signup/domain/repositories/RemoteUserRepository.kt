@@ -6,6 +6,7 @@ import katas.client.twitter.signup.domain.entities.User
 
 interface RemoteUserRepository {
     fun save(user: User): Completable
+    fun update(user: User): Completable
     fun find(nickname: String): Single<User>
     fun follow(nickname: String, follow: String): Completable
 }

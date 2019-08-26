@@ -48,6 +48,10 @@ class HomeFragment : Fragment() {
             )
         }
 
+        updateButton.setOnClickListener {
+            homeViewModel.updateUser(nicknameEditText.text.toString(), userNameEditText.text.toString())
+        }
+
         newTweetButton.setOnClickListener {
             findNavController().navigate(R.id.action_tweetsFragment_to_tweetDialogFragment)
         }
