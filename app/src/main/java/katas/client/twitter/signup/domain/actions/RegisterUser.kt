@@ -14,7 +14,7 @@ class RegisterUser(
         val user = User(userName, nickname, emptySet())
         return remoteUserRepository
             .save(user)
-            .doOnComplete { localUserRepository.save(user) }
+            .andThen(localUserRepository.save(user))
             .doOnError { throw RuntimeException("Cannot register user $nickname") }
     }
 }

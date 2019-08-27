@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">twitter-client</string>
+    <string name="follow" >\@follow</string>
 </resources>
